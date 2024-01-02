@@ -1,32 +1,21 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
-from flask import Flask, request, jsonify
+# app.py
+import streamlit as st
 import pickle
+import numpy as np
 
-app = Flask(__name__)
+# Load the trained machine learning model
+model = pickle.load('gbrt_model.pkl')
 
-# Load the serialized model
-with open('gbrt_model.pkl', 'rb') as file:
-    model = pickle.load(file)
+# Streamlit app code
+st.title('Premium Mobility Battery Prediction')
 
-@app.route('/')
-def home():
-    return 'ML Model Deployment with Flask on PythonAnywhere'
+# Create input components (e.g., sliders, text input, etc.)
+feature1 = st.slider('Feature 1', 0.0, 10.0, 5.0)
+feature2 = st.slider('Feature 2', 0.0, 10.0, 5.0)
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.get_json(force=True)  # Adjust this based on your model's input
+# Make predictions based on user input
+input_data = np.array([[feature1, feature2,0,0,0,0,0,0,0,0,0,0,0]])
+prediction = model.predict(input_data)
 
-    # Make predictions using the loaded model
-    prediction = model.predict(X_test)
-
-    # Return the prediction as JSON
-    return jsonify({'prediction': prediction.tolist()})
-
-if __name__ == '__main__':
-    app.run()
-
+# Display the prediction
+st.write('Prediction:', prediction[0])
