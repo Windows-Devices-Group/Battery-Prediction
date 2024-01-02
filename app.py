@@ -4,7 +4,8 @@ import pickle
 import numpy as np
 
 # Load the trained machine learning model
-model = pickle.load('gbrt_model.pkl')
+with open('gbrt_model.pkl', 'rb') as file:
+    model = pickle.load(file)
 
 # Streamlit app code
 st.title('Premium Mobility Battery Prediction')
