@@ -1,11 +1,11 @@
 # app.py
 import streamlit as st
-import pickle
+import joblib
 import numpy as np
 
 # Load the trained machine learning model
-with open('gbrt_model.pkl', 'rb') as file:
-    model = pickle.load(file)
+with open('gbrt_model.joblib', 'rb') as file:
+    model = joblib.load(file)
 
 # Streamlit app code
 st.title('Premium Mobility Battery Prediction')
@@ -15,7 +15,7 @@ feature1 = st.slider('Feature 1', 0.0, 10.0, 5.0)
 feature2 = st.slider('Feature 2', 0.0, 10.0, 5.0)
 
 # Make predictions based on user input
-input_data = np.array([[feature1, feature2,0,0,0,0,0,0,0,0,0,0,0]])
+input_data = np.array([[0,0,0,0,0,0,0,0,0,0,0,0,0]])
 prediction = model.predict(input_data)
 
 # Display the prediction
